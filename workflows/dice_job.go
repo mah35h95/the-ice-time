@@ -9,6 +9,7 @@ import (
 
 	"the-ice-time/auth"
 	"the-ice-time/dice"
+	"the-ice-time/model"
 	"the-ice-time/utils"
 
 	"go.temporal.io/sdk/temporal"
@@ -54,7 +55,7 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 	err := error(nil)
 
 	switch cmd {
-	case dice.Pause:
+	case model.Pause:
 		err = workflow.ExecuteActivity(
 			ctx,
 			dice.ExecuteJobCmd,
@@ -62,11 +63,11 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			metaSvcUrl,
 			bearer,
 			http.MethodPost,
-			dice.Pause,
+			model.Pause,
 			body,
 		).Get(ctx, nil)
 
-	case dice.Resume:
+	case model.Resume:
 		err = workflow.ExecuteActivity(
 			ctx,
 			dice.ExecuteJobCmd,
@@ -74,11 +75,11 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			metaSvcUrl,
 			bearer,
 			http.MethodPost,
-			dice.Resume,
+			model.Resume,
 			body,
 		).Get(ctx, nil)
 
-	case dice.Stop:
+	case model.Stop:
 		err = workflow.ExecuteActivity(
 			ctx,
 			dice.ExecuteJobCmd,
@@ -86,11 +87,11 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			metaSvcUrl,
 			bearer,
 			http.MethodPost,
-			dice.Stop,
+			model.Stop,
 			body,
 		).Get(ctx, nil)
 
-	case dice.Load:
+	case model.Load:
 		err = workflow.ExecuteActivity(
 			ctx,
 			dice.ExecuteJobCmd,
@@ -98,11 +99,11 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			metaSvcUrl,
 			bearer,
 			http.MethodPost,
-			dice.Load,
+			model.Load,
 			body,
 		).Get(ctx, nil)
 
-	case dice.Lock:
+	case model.Lock:
 		err = workflow.ExecuteActivity(
 			ctx,
 			dice.ExecuteJobCmd,
@@ -110,11 +111,11 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			metaSvcUrl,
 			bearer,
 			http.MethodPost,
-			dice.Lock,
+			model.Lock,
 			body,
 		).Get(ctx, nil)
 
-	case dice.Unlock:
+	case model.Unlock:
 		err = workflow.ExecuteActivity(
 			ctx,
 			dice.ExecuteJobCmd,
@@ -122,11 +123,11 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			metaSvcUrl,
 			bearer,
 			http.MethodPost,
-			dice.Unlock,
+			model.Unlock,
 			body,
 		).Get(ctx, nil)
 
-	case dice.Reload:
+	case model.Reload:
 		body = `{"keepFoundryDataset": true,"retainData": false}`
 		err = workflow.ExecuteActivity(
 			ctx,
@@ -135,11 +136,11 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			metaSvcUrl,
 			bearer,
 			http.MethodPost,
-			dice.Reload,
+			model.Reload,
 			body,
 		).Get(ctx, nil)
 
-	case dice.EditGCPTarget:
+	case model.EditGCPTarget:
 		// body = `{"targetProjectIds": ["prep-2134-entdatalake-969cbf","qa-2134-entdatalake-d057be"],"jdbcTargets": []}`
 		err = workflow.ExecuteActivity(
 			ctx,
@@ -148,11 +149,11 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			metaSvcUrl,
 			bearer,
 			http.MethodPost,
-			dice.Edit,
+			model.Edit,
 			body,
 		).Get(ctx, nil)
 
-	case dice.Delete:
+	case model.Delete:
 		err = workflow.ExecuteActivity(
 			ctx,
 			dice.DeleteJob,
@@ -161,7 +162,7 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			bearer,
 		).Get(ctx, nil)
 
-	case dice.EditCron:
+	case model.EditCron:
 		cron, cronTimeZone := utils.GetCron(index)
 		err = workflow.ExecuteActivity(
 			ctx,
@@ -173,7 +174,7 @@ func cmdActivity(ctx workflow.Context, index int, dataSourceId, metaSvcUrl, body
 			cronTimeZone,
 		).Get(ctx, nil)
 
-	case dice.DeleteHydratedRes:
+	case model.DeleteHydratedRes:
 		err = workflow.ExecuteActivity(
 			ctx,
 			dice.DeleteHydratedResources,
