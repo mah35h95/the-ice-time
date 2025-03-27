@@ -12,5 +12,5 @@ func GetIdentityToken() string {
 	if err != nil {
 		fmt.Println(err)
 	}
-	return strings.ReplaceAll(strings.ReplaceAll(string(out), "\r", ""), "\n", "")
+	return fmt.Sprintf("Bearer %s", strings.ReplaceAll(strings.ReplaceAll(string(out), "\r", ""), "\n", ""))
 }

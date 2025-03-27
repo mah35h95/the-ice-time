@@ -54,7 +54,7 @@ func main() {
 		log.Fatalf("%s was not able to be read", filePath)
 	}
 
-	jobs := strings.Split(string(fileData), "\n")
+	jobs := strings.Split(strings.ReplaceAll(string(fileData), "\r", ""), "\n")
 
 	temporalClient, err := client.Dial(client.Options{})
 	if err != nil {
@@ -76,7 +76,7 @@ func main() {
 			index := (chunkSize * i) + j + 1
 			dataSourceId := jobIDs[j]
 
-			workflowID := fmt.Sprintf("%s-%s", cmd, dataSourceId)
+			workflowID := fmt.Sprintf("%s-%s-%s", environment, cmd, dataSourceId)
 			options := client.StartWorkflowOptions{
 				ID:        workflowID,
 				TaskQueue: model.DICEJobQueue,

@@ -38,7 +38,7 @@ func JobCMDWorkflow(
 	ctx = workflow.WithActivityOptions(ctx, activityOptions)
 
 	err := cmdActivity(ctx, index, dataSourceId, metaSvcUrl, body, bearer, cmd)
-	if err.Error() == "403" {
+	if err != nil && err.Error() == "403" {
 		bearer = auth.GetIdentityToken()
 		err = cmdActivity(ctx, index, dataSourceId, metaSvcUrl, body, bearer, cmd)
 	}
