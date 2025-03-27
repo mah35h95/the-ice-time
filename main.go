@@ -54,6 +54,10 @@ func main() {
 		log.Fatalf("%s was not able to be read", filePath)
 	}
 
+	if len(fileData) == 0 {
+		log.Fatalf("%s no data to read", filePath)
+	}
+
 	jobs := strings.Split(strings.ReplaceAll(string(fileData), "\r", ""), "\n")
 
 	temporalClient, err := client.Dial(client.Options{})
